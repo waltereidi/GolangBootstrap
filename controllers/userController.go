@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"go-api/models"
+	"golangbootstrap/models"
 
 	"github.com/gin-gonic/gin"
 )

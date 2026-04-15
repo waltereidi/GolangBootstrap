@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
-	"golangbootstrap/models"
+	"github.com/waltereidi/GolangBootstrap/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,10 +22,15 @@ func GetUsers(c *gin.Context) {
 
 // GET /users/:id
 func GetUserByID(c *gin.Context) {
-	id := c.Param("id")
+	idParam := c.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
 
 	for _, user := range users {
-		if id == string(rune(user.ID)) {
+		if user.ID == id {
 			c.JSON(http.StatusOK, user)
 			return
 		}
